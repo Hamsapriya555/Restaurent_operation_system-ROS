@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ROS Dashboard - Live Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>ROS Dashboard - Live Data</h1>
+        <p>Restaurant Operations System - Real-Time Analytics</p>
+    </div>
+
+    <div class="dashboard-container">
+
+        <div id="loading" class="loading">
+            Loading real-time data...
+        </div>
+
+        <div id="error" class="error" style="display:none;">
+            Failed to load dashboard data from backend API.
+        </div>
+
+        <div id="dashboard-content" style="display:none;">
+
+            <div class="filters-section" aria-label="Dashboard filters">
+                <div class="filter-item">
+                    <label for="clientFilter">Client</label>
+                    <select id="clientFilter">
+                        <option value="">All Clients</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="restaurantFilter">Restaurant</label>
+                    <select id="restaurantFilter">
+                        <option value="">All Restaurants</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="dateFrom">Date From</label>
+                    <input type="date" id="dateFrom">
+                </div>
+
+                <div class="filter-item">
+                    <label for="dateTo">Date To</label>
+                    <input type="date" id="dateTo">
+                </div>
+
+                <div class="filter-actions">
+                    <button type="button" id="applyFilter" class="filter-btn primary">Apply</button>
+                    <button type="button" id="clearFilter" class="filter-btn secondary">Clear</button>
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+
+                <div class="metric-card">
+                    <div class="metric-value revenue" id="totalRevenue">--</div>
+                    <div class="metric-label">Total Revenue</div>
+                    <div class="metric-change neutral">From Live API</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value orders" id="totalOrders">--</div>
+                    <div class="metric-label">Total Orders</div>
+                    <div class="metric-change positive">Processed Orders</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value expenses" id="totalExpenses">--</div>
+                    <div class="metric-label">Total Expenses</div>
+                    <div class="metric-change neutral">Operational Costs</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value profit" id="netProfit">--</div>
+                    <div class="metric-label">Net Profit</div>
+                    <div class="metric-change" id="profitMargin">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value reconciliation" id="reconciliationRate">--</div>
+                    <div class="metric-label">Reconciliation Rate</div>
+                    <div class="metric-change" id="reconciliationStatus">--</div>
+                </div>
+
+            </div>
+
+            <div class="charts-grid">
+
+                <div class="chart-card">
+                    <div class="chart-title">Revenue Breakdown</div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-title">Expense Categories</div>
+                    <div class="chart-container">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-title">Operational Metrics</div>
+                    <div class="chart-container">
+                        <canvas id="operationalChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-title">Geographic Distribution</div>
+                    <div class="chart-container">
+                        <canvas id="geographicChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="insights-section">
+                <div class="insights-title">Business Insights</div>
+                <div id="criticalInsights"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>
+            ROS Dashboard | Powered by Flask + Chart.js |
+            Last Updated: <span id="lastUpdate"></span>
+        </p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+</html>
